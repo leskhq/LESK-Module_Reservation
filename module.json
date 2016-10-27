@@ -1,0 +1,9 @@
+{
+	"name": "Reservation",
+	"slug": "reservation",
+	"namespace": "Reservation",
+	"version": "1.0",
+	"author": "Sebastien Routier",
+	"license": "GPL-3.0",
+	"description": "Allows the management of reservable items."
+}
