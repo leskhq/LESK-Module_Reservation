@@ -33,7 +33,19 @@ Route::group(['middleware' => 'authorize'], function () {
 
     // Reservation routes
     Route::group(['prefix' => 'reservation'], function () {
-        Route::get('/',        ['as' => 'reservation.index',         'uses' => 'ReservationController@index']);
+        Route::get(   '/',                        ['as' => 'reservation.index',               'uses' => 'ReservationController@index']);
+        Route::post(  '/',                        ['as' => 'reservation.store',               'uses' => 'ReservationController@store']);
+        Route::get(   'create',                   ['as' => 'reservation.create',              'uses' => 'ReservationController@create']);
+        Route::get(   '{itemID}',                 ['as' => 'reservation.show',                'uses' => 'ReservationController@show']);
+        Route::patch( '{itemID}',                 ['as' => 'reservation.patch',               'uses' => 'ReservationController@update']);
+        Route::get(   '{itemID}/edit',            ['as' => 'reservation.edit',                'uses' => 'ReservationController@edit']);
+        Route::get(   '{itemID}/confirm-delete',  ['as' => 'reservation.confirm-delete-item', 'uses' => 'ReservationController@getModalDeleteItem']);
+        Route::get(   '{itemID}/delete',          ['as' => 'reservation.delete',              'uses' => 'ReservationController@destroyItem']);
+        Route::get(   '{itemID}/sign-out',        ['as' => 'reservation.sign-out',            'uses' => 'ReservationController@getSignOut']);
+        Route::post(  '{itemID}/sign-out',        ['as' => 'reservation.post-sign-out',       'uses' => 'ReservationController@postSignOut']);
+        Route::get(   '{itemID}/confirm-sign-in', ['as' => 'reservation.confirm-sign-in',     'uses' => 'ReservationController@getModalSignIn']);
+        Route::get(   '{itemID}/sign-in',         ['as' => 'reservation.sign-in',             'uses' => 'ReservationController@signIn']);
+
     }); // End of Reservation group
 
 
