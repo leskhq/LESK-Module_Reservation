@@ -1,22 +1,21 @@
 # Reservation module
 
-To deploy simply clone the repository from the ```Modules``` directory of the base [LESK](https://github.com/sroutier/laravel-enterprise-starter-kit) install, as shown below:
+To deploy simply clone the repository into the ```Modules``` directory from the base or root [LESK](https://github.com/sroutier/laravel-enterprise-starter-kit) install, as shown below:
 ```
-$ cd app/Modules/
-$ git clone https://<git-repo-server>/<group>/<repository>.git Reservation
+$ cd <MySuperProjectBasedOnLESK>
+$ git clone https://github.com/sroutier/LESK-Module_Reservation.git app/Modules/Reservation
 ```
 
 Then make sure to optimize the master module definition, from the base directory, with:
 ```
-$ cd ../..
 $ ./artisan module:optimize
 ```
 
 # Dependencies
-....
+None. 
 
-#Prerequisites
-....
+# Prerequisites
+None.
 
 # Installing and activating
 Once a new module is detected by the framework, a site administrator can go to the "Modules administration" page and first
