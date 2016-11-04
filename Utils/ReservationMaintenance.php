@@ -140,7 +140,7 @@ class ReservationMaintenance implements ModuleMaintenanceInterface
 
             ////////////////////////////////////
             // Create menu system for the module
-            $menuToolsContainer = self::createMenu( 'tools-container', 'Tools', 10, 'fa fa-folder', 'home', true );
+            $menuToolsContainer = self::createMenu( 'tools-container', 'Tools', 10, 'ion ion-settings', 'home', true );
             self::createMenu( 'reservation.index', 'Reservation', 0, 'fa fa-file', $menuToolsContainer, false, $routeHome );
         }); // End of DB::transaction(....)
     }
