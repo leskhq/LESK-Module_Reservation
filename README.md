@@ -18,7 +18,8 @@ None.
 None.
 
 # Installing and activating
-Once a new module is detected by the framework, a site administrator can go to the "Modules administration" page and first
- initialize the module, then enable it for all authorized users to have access.
-  
-  
+Once a new module is detected by the framework, a site administrator can go to the "Modules administration" page 
+and first initialize the module, then enable it for all authorized users to have access.
+
+# Configuration
+None.
