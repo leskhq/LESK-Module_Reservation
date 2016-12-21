@@ -35,6 +35,8 @@ class ReservationController extends Controller
     {
         $this->item         = $item;
         $this->reservation  = $reservation;
+        // Set default crumbtrail for controller.
+        session(['crumbtrail.leaf' => 'reservation.index']);
     }
 
 
@@ -60,7 +62,6 @@ class ReservationController extends Controller
         $page_title = trans('reservation::general.page.show.title');
         $page_description = trans('reservation::general.page.show.description', ['name' => $item->name]);
 
-        session(['crumbtrail.leaf' => 'reservation.index']);
         return view('reservation::show', compact('item', 'page_title', 'page_description'));
     }
 
@@ -73,7 +74,6 @@ class ReservationController extends Controller
 
         Audit::log(Auth::user()->id, trans('reservation::general.audit-log.category'), trans('reservation::general.audit-log.msg-edit', ['name' => $item->name]));
 
-        session(['crumbtrail.leaf' => 'reservation.index']);
         return view('reservation::edit', compact('item', 'page_title', 'page_description'));
     }
 
@@ -113,7 +113,6 @@ class ReservationController extends Controller
 
         $item = new \App\Modules\Reservation\Models\Item();
 
-        session(['crumbtrail.leaf' => 'reservation.index']);
         return view('reservation::create', compact('item', 'page_title', 'page_description'));
     }
 
@@ -154,7 +153,6 @@ class ReservationController extends Controller
         $page_title = trans('reservation::general.page.sign-out.title');
         $page_description = trans('reservation::general.page.sign-out.description', ['name' => $item->name]);
 
-        session(['crumbtrail.leaf' => 'reservation.index']);
         return view('reservation::sign-out', compact('item', 'newReservation', 'page_title', 'page_description'));
 
     }
