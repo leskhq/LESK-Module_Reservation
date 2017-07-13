@@ -81,7 +81,7 @@ class ReservationMaintenance implements ModuleMaintenanceInterface
                 'App\Modules\Reservation\Http\Controllers\ReservationController@create',
                 $permReservationCreateItem );
             $routeStore = self::createRoute( 'reservation.store',
-                'reservation/',
+                'reservation',
                 'App\Modules\Reservation\Http\Controllers\ReservationController@store',
                 $permReservationCreateItem,
                 'POST' );

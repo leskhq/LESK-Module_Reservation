@@ -12,6 +12,7 @@ return [
         'msg-signed-in'         => 'Successfully signed-in item: :name.',
         'msg-signed-out'        => 'Successfully signed-out item: :name.',
         'msg-destroyed'         => 'Deleted item: :name.',
+        'msg-create'            => 'Initiated creation of new item.',
     ],
 
     'page'              => [

@@ -108,6 +108,8 @@ class ReservationController extends Controller
 
     public function create()
     {
+        Audit::log(Auth::user()->id, trans('reservation::general.audit-log.category'), trans('reservation::general.audit-log.msg-create'));
+
         $page_title = trans('reservation::general.page.create.title');
         $page_description = trans('reservation::general.page.create.description');
 
