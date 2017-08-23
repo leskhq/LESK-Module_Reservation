@@ -4,16 +4,24 @@
     <!-- Tags css -->
     @include('partials._head_extra_tags_css')
 
-    <!-- Make the tag input field read-only and the border of the
+    <!-- Resize the tag input field in the toolbar -->
+    <style>
+        #header-box .bootstrap-tagsinput {
+            width:50% !important;
+        }
+    </style>
+
+    <!-- Make the tag input field in the main table
+         read-only and the border of the
          surrounding div invisible. -->
     <style>
-        .bootstrap-tagsinput {
+        #items-table .bootstrap-tagsinput {
             border:hidden !important;
         }
-        .bootstrap-tagsinput input{
+        #items-table .bootstrap-tagsinput input{
             visibility:hidden !important;
         }
-        .bootstrap-tagsinput > span > span{
+        #items-table .bootstrap-tagsinput > span > span{
             display:none !important;
         }
     </style>
@@ -25,7 +33,7 @@
             <!-- Box -->
             {!! Form::open( array('route' => 'reservation.search', 'id' => 'frmSearch') ) !!}
                 <div class="box box-primary">
-                    <div class="box-header with-border">
+                    <div id="header-box" class="box-header with-border">
                         <h3 class="box-title">{{ trans('reservation::general.page.index.box-title') }}</h3>
                         &nbsp;
                         @permission('reservation.create-item')
@@ -33,7 +41,7 @@
                                 <i class="fa fa-plus-square"></i>
                             </a>
                         @endpermission
-                            {!! Form::text('txtTagFilter', $tagFilter, [ 'placeholder' => 'Enter tag filter', 'style' => 'max-width:150px;', 'id' => 'txtTagFilter']) !!}
+                            {!! Form::text('txtTagFilter', $tagFilter, [ 'placeholder' => 'Enter tag filter', 'style' => 'max-width:150px;', 'id' => 'txtTagFilter', 'data-role' => 'tagsinput']) !!}
                             <a class="btn btn-default btn-sm" href="#" onclick="document.forms['frmSearch'].action = '{{ route('reservation.search') }}';  document.forms['frmSearch'].submit(); return false;" title="{{ trans('reservation::general.action.tag-filter') }}">
                                 <i class="fa fa-search"></i>
                             </a>
@@ -46,13 +54,13 @@
                     <div class="box-body">
 
                         <div class="table-responsive">
-                            <table class="table table-hover">
+                            <table id="items-table" class="table table-hover">
                                 <thead>
                                 <tr>
                                     <th>{{ trans('reservation::general.columns.available') }}</th>
                                     <th>{{ trans('reservation::general.columns.name') }}</th>
-                                    <th>{{ trans('reservation::general.columns.description') }}</th>
-                                    <th>{{ trans('reservation::general.columns.tags') }}</th>
+                                    <th width="30%">{{ trans('reservation::general.columns.description') }}</th>
+                                    <th width="30%">{{ trans('reservation::general.columns.tags') }}</th>
                                     <th>{{ trans('reservation::general.columns.user_name') }}</th>
                                     <th>{{ trans('reservation::general.columns.return_date') }}</th>
                                     <th>{{ trans('reservation::general.columns.actions') }}</th>
