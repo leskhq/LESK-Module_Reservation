@@ -1,6 +1,18 @@
 @extends('layouts.master')
 
 @section('head_extra')
+    <!-- Tags css -->
+    @include('partials._head_extra_tags_css')
+
+    <!-- Make the tag input field read-only. -->
+    <style>
+        .bootstrap-tagsinput input{
+            visibility:hidden !important;
+        }
+        .bootstrap-tagsinput > span > span{
+            display:none !important;
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -29,6 +41,11 @@
                         </div>
 
                         <div class="form-group">
+                            {!! Form::label('tags', trans('reservation::general.columns.tags')) !!}
+                            {!! Form::text('tags', implode(",", $item->tagNames()), ['data-role' => 'tagsinput']) !!}
+                        </div>
+
+                    <div class="form-group">
                             {!! Form::submit(trans('general.button.close'), ['class' => 'btn btn-primary']) !!}
                             @permission('reservation.edit-item')
                                 <a href="{!! route('reservation.edit', $item->id) !!}" title="{{ trans('general.button.edit') }}" class='btn btn-default'>{{ trans('general.button.edit') }}</a>
@@ -90,4 +107,6 @@
 
 <!-- Optional bottom section for modals etc... -->
 @section('body_bottom')
+    <!-- Tags css -->
+    @include('partials._body_bottom_tags_js')
 @endsection

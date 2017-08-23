@@ -13,6 +13,7 @@ return [
         'msg-signed-out'        => 'Successfully signed-out item: :name.',
         'msg-destroyed'         => 'Deleted item: :name.',
         'msg-create'            => 'Initiated creation of new item.',
+        'msg-search'            => 'Search for tags: [:tagFilter]',
     ],
 
     'page'              => [
@@ -57,6 +58,7 @@ return [
         'from_date'         => 'Sign-out date',
         'to_date'           => 'Expected return date',
         'actions'           => 'Actions',
+        'tags'              => 'Tags',
     ],
 
     'button'   => [

@@ -45,6 +45,7 @@ Route::group(['middleware' => 'authorize'], function () {
         Route::post(  '{itemID}/sign-out',        ['as' => 'reservation.post-sign-out',       'uses' => 'ReservationController@postSignOut']);
         Route::get(   '{itemID}/confirm-sign-in', ['as' => 'reservation.confirm-sign-in',     'uses' => 'ReservationController@getModalSignIn']);
         Route::get(   '{itemID}/sign-in',         ['as' => 'reservation.sign-in',             'uses' => 'ReservationController@signIn']);
+        Route::post(  '/search',                  ['as' => 'reservation.search',              'uses' => 'ReservationController@search']);
 
     }); // End of Reservation group
 

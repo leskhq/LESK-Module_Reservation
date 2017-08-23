@@ -1,8 +1,8 @@
 @extends('layouts.master')
 
 @section('head_extra')
-    <!-- Select2 css -->
-    @include('partials._head_extra_select2_css')
+    <!-- Tags css -->
+    @include('partials._head_extra_tags_css')
 @endsection
 
 @section('content')
@@ -39,4 +39,6 @@
 
 <!-- Optional bottom section for modals etc... -->
 @section('body_bottom')
+    <!-- Tags css -->
+    @include('partials._body_bottom_tags_js')
 @endsection

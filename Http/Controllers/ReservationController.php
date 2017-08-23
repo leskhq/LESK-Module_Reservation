@@ -4,6 +4,7 @@ namespace App\Modules\Reservation\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use App\Libraries\FlashLevel;
+use App\Libraries\Str;
 use App\Libraries\Utils;
 use App\Modules\Reservation\Repositories\Criteria\Item\ItemWithReservationsByIDDesc;
 use App\Modules\Reservation\Repositories\ItemRepository as Item;
@@ -49,7 +50,10 @@ class ReservationController extends Controller
 
         $items = $this->item->pushCriteria(new ItemsByNamesAscending())->paginate(20);
 
-        return view('reservation::index', compact('items', 'page_title', 'page_description'));
+        //Blank tagFilter to start.
+        $tagFilter = '';
+
+        return view('reservation::index', compact('items', 'page_title', 'page_description', 'tagFilter'));
     }
 
     public function show($id)
@@ -98,6 +102,8 @@ class ReservationController extends Controller
         else {
             $item->update($attributes);
 
+            $item->retag(explode(',', $request->tags));
+
             $msg  = trans('reservation::general.audit-log.msg-update', ['name' => $item->name]);
             Utils::FlashAndAudit($audit_log_cat, $msg, FlashLevel::SUCCESS);
         }
@@ -114,8 +120,9 @@ class ReservationController extends Controller
         $page_description = trans('reservation::general.page.create.description');
 
         $item = new \App\Modules\Reservation\Models\Item();
+        $tags = \App\Modules\Reservation\Models\Item::existingTags()->pluck('name');
 
-        return view('reservation::create', compact('item', 'page_title', 'page_description'));
+        return view('reservation::create', compact('item', 'page_title', 'page_description', 'tags'));
     }
 
     public function store(Request $request)
@@ -138,7 +145,9 @@ class ReservationController extends Controller
                 ->withInput();
         }
         else {
-            $this->item->create($attributes);
+            $item = $this->item->create($attributes);
+
+            $item->retag(explode(',', $request->tags));
 
             $msg  = trans('reservation::general.audit-log.msg-store', ['name' => $attributes['name']]);
             Utils::FlashAndAudit($audit_log_cat, $msg, FlashLevel::SUCCESS);
@@ -256,5 +265,29 @@ class ReservationController extends Controller
         return redirect()->route('reservation.index');
     }
 
+    public function search(Request $request)
+    {
+
+        $page_title = trans('reservation::general.page.index.title');
+        $page_description = trans('reservation::general.page.index.description');
+
+        $tagFilter = $request->input('txtTagFilter');
+        $tagFilter = trim($tagFilter);
+
+        Audit::log(Auth::user()->id, trans('reservation::general.audit-log.category'), trans('reservation::general.audit-log.msg-search', ['tagFilter' => $tagFilter]));
+
+        if (Str::isNullOrEmptyString($tagFilter))
+        {
+            $items = $this->item->pushCriteria(new ItemsByNamesAscending())->paginate(20);
+        }
+        else
+        {
+            $tagFilterArr = array_map('trim', explode(',', $tagFilter));;
+            $items = \App\Modules\Reservation\Models\Item::withAnyTag($tagFilterArr)->paginate(20); // fetch articles with any tag listed
+        }
+
+        return view('reservation::index', compact('items', 'page_title', 'page_description', 'tagFilter'));
+
+    }
 
 }

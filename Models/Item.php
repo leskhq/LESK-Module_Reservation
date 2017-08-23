@@ -3,11 +3,14 @@
 use App\Modules\Reservation\Exceptions\ItemNotSignedInException;
 use App\Modules\Reservation\Exceptions\ItemNotSignedOutException;
 use Carbon\Carbon;
+use Conner\Tagging\Taggable;
 use DB;
 use Illuminate\Database\Eloquent\Model;
 
 class Item extends Model
 {
+
+    use Taggable;
 
     /**
      * The table associated with the model.
