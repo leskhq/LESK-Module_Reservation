@@ -50,10 +50,16 @@ class ReservationController extends Controller
 
         $items = $this->item->pushCriteria(new ItemsByNamesAscending())->paginate(20);
 
-        //Blank tagFilter to start.
+        // Blank tagFilter to start.
         $tagFilter = '';
+        $tagNamesArr = \App\Modules\Reservation\Models\Item::existingTags()
+            ->pluck('name')
+            ->map(function ($item, $key) {
+                return "'$item'";
+            })->all();
+        $tagNames = implode(',', $tagNamesArr);
 
-        return view('reservation::index', compact('items', 'page_title', 'page_description', 'tagFilter'));
+        return view('reservation::index', compact('items', 'page_title', 'page_description', 'tagFilter', 'tagNames'));
     }
 
     public function show($id)
@@ -78,7 +84,14 @@ class ReservationController extends Controller
 
         Audit::log(Auth::user()->id, trans('reservation::general.audit-log.category'), trans('reservation::general.audit-log.msg-edit', ['name' => $item->name]));
 
-        return view('reservation::edit', compact('item', 'page_title', 'page_description'));
+        $tagNamesArr = \App\Modules\Reservation\Models\Item::existingTags()
+            ->pluck('name')
+            ->map(function ($item, $key) {
+                return "'$item'";
+            })->all();
+        $tagNames = implode(',', $tagNamesArr);
+
+        return view('reservation::edit', compact('item', 'page_title', 'page_description', 'tagNames'));
     }
 
     public function update(Request $request, $id)
@@ -120,9 +133,14 @@ class ReservationController extends Controller
         $page_description = trans('reservation::general.page.create.description');
 
         $item = new \App\Modules\Reservation\Models\Item();
-        $tags = \App\Modules\Reservation\Models\Item::existingTags()->pluck('name');
+        $tagNamesArr = \App\Modules\Reservation\Models\Item::existingTags()
+            ->pluck('name')
+            ->map(function ($item, $key) {
+                return "'$item'";
+            })->all();
+        $tagNames = implode(',', $tagNamesArr);
 
-        return view('reservation::create', compact('item', 'page_title', 'page_description', 'tags'));
+        return view('reservation::create', compact('item', 'page_title', 'page_description', 'tagNames'));
     }
 
     public function store(Request $request)
@@ -286,7 +304,14 @@ class ReservationController extends Controller
             $items = \App\Modules\Reservation\Models\Item::withAnyTag($tagFilterArr)->paginate(20); // fetch articles with any tag listed
         }
 
-        return view('reservation::index', compact('items', 'page_title', 'page_description', 'tagFilter'));
+        $tagNamesArr = \App\Modules\Reservation\Models\Item::existingTags()
+            ->pluck('name')
+            ->map(function ($item, $key) {
+                return "'$item'";
+            })->all();
+        $tagNames = implode(',', $tagNamesArr);
+
+        return view('reservation::index', compact('items', 'page_title', 'page_description', 'tagFilter', 'tagNames'));
 
     }
 

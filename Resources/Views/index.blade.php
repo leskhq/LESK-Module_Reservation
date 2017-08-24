@@ -146,4 +146,27 @@
 @section('body_bottom')
     <!-- Tags css -->
     @include('partials._body_bottom_tags_js')
+
+    <script>
+        var tagNames = new Bloodhound({
+            initialize: false,
+            local: [{!! $tagNames !!}],
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            datumTokenizer: Bloodhound.tokenizers.whitespace
+        });
+
+        var tagNamesInit = tagNames.initialize();
+
+        $("input[data-role='tagsinput']").tagsinput({
+            typeaheadjs: ({
+                hint: true,
+                highlight: true,
+                minLength: 1
+            },
+                {
+                    source: tagNames
+                })
+        });
+    </script>
+
 @endsection
